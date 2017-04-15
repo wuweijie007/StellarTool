@@ -1,0 +1,90 @@
+﻿
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<script src="js/stellar-sdk.min.js"></script>
+	
+	<link rel="stylesheet" href="css/bootstrap-3.1.1.min.css">
+	<link rel="stylesheet" href="css/stellar-tool.css">
+
+	<style type="text/css">
+		.right { text-align: right }
+	</style>
+	
+<title>查询</title>
+</head>
+<body style="padding-top: 50px;">
+
+<div class="container body-content" ng-controller="MyController">
+	<div class="row">
+		<div id="content" class="col-md-12" ng-show="errMsg">
+			<div class="panel settings">
+				<ul>
+					<li><span class="label-danger">{{errMsg}}</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div id="content" class="col-md-12">
+			<div class="panel panel-default settings">
+			<p>
+				<label>公钥账号：</label>
+				<input type="text"  ng-model="account.address" placeholder="G开头的地址" size="80">
+			</p>
+			<p>
+				<a class='btn btn-primary' ng-click="queryInfo()" ng-disabled="working">查询</a>
+			</p>
+			</div>
+		</div>
+	</div>
+		
+	<div class="row">
+		<div id="content" class="col-md-12">
+			<div class="panel panel-default">
+		         <div class="panel-heading">
+		             <h3 class="panel-title">资产</h3>
+		         </div>
+					<table class="table table-hover">
+		              <tbody>
+		                  <tr ng-repeat="(key, line) in account.balances" style="border-top: none;">
+		                      <td style="text-align:left"><span class="currency {{cssCurrency(line.currency)}}">{{line.currency}}</span></td>
+		                      <td style="text-align:right">{{line.value}}</td>
+		                      <td style="text-align:left; color: #999;">{{line.issuer}}</td>
+		                  </tr>
+		              </tbody>
+		          </table>
+		     </div>
+		</div>	
+	</div>
+	
+	<div class="row">
+		<div id="content" class="col-md-12">
+			<div class="panel panel-default">
+		         <div class="panel-heading">
+		             <h3 class="panel-title">交易序号</h3>
+		         </div>
+					<table class="table table-hover">
+		              <tbody>
+		                  <tr style="border-top: none;">
+		                      <td style="text-align:left"><span class=" ">当前</span></td>
+		                      <td style="text-align:left">{{account.seq}}</td>
+		                  </tr>
+		                  <tr style="border-top: none;" ng-hide="true">
+		                      <td style="text-align:left"><span class=" ">签名时使用</span></td>
+		                      <td style="text-align:left">{{account.seq_next}}</td>
+		                  </tr>
+		              </tbody>
+		          </table>
+		     </div>
+		</div>	
+	</div>
+	
+</div>
+
+</body>
+<script src="js/angular-1.3.min.js"></script>
+<script src="js/stellar-tool.js"></script>
+<script src="js/query.js"></script>
+
+</html>

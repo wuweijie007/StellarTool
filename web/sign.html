@@ -1,0 +1,127 @@
+﻿
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<script src="js/stellar-sdk.min.js"></script>
+	
+	<link rel="stylesheet" href="css/bootstrap-3.1.1.min.css">
+	<link rel="stylesheet" href="css/stellar-tool.css">
+
+	<style type="text/css">
+		.right { text-align: right }
+	</style>
+	
+<title>签名</title>
+</head>
+<body style="padding-top: 50px;">
+
+<div class="container body-content" ng-controller="MyController">
+	<div class="row">
+		<div id="content" class="col-md-12" ng-show="errMsg">
+			<div class="panel settings">
+				<ul>
+					<li><span class="label-danger">{{errMsg}}</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div id="content" class="col-md-12" ng-show="message">
+			<div class="panel settings">
+				<ul>
+					<li><span class="label-success">{{message}}</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div id="content" class="col-md-12">
+			<div class="panel panel-default settings">
+			<p>
+				<label>公钥账号：</label>
+				<input type="text" ng-disabled="true" ng-model="account.address" size="80">
+			</p>
+			<p ng-hide="isSecretSet">
+				<label>密钥：</label>
+				<input type="password" ng-model="account.seed" placeholder="S开头的密钥" size="60">
+				<a class='btn btn-primary' role='button' ng-click="setSecret()">设置</a>
+			</p>
+			</div>
+		</div>
+	</div>
+		
+	<div class="row" ng-show="account.address">
+		<div id="content" class="col-md-12">
+			<div class="panel panel-default">
+		         <div class="panel-heading">
+		             <h3 class="panel-title">发送</h3>
+		         </div>
+		         <table class="table table-hover">
+		              <tbody>
+		                  <tr style="border-top: none;">
+		                      <td style="text-align:left"><label>目标账号：</label></td>
+		                      <td style="text-align:left"><input type="text" ng-model="account.to" size="70"></td>
+		                  	  <td><select required  ng-model="account.optionType">
+									<option value="payment">已激活</option>
+									<option value="create">未激活</option>
+								</select></td>
+		                  </tr>
+		                  <tr style="border-top: none;">
+		                      <td style="text-align:left"><label>交易序号：</label></td>
+		                      <td style="text-align:left"><input type="text" ng-model="account.seq" size="20"></td>
+		                  	  <td>请用在线工具查询序号</td>
+		                  </tr>
+		                  <tr style="border-top: none;">
+		                      <td style="text-align:left"><label>网络费：</label></td>
+		                      <td style="text-align:left"><input type="text" ng-model="account.fee" size="10"></td>
+		                  	  <td>标准网络费100 = 0.00001 XLM。</td>
+		                  </tr>
+		                  <tr style="border-top: none;">
+		                      <td style="text-align:left"><label>发送的XLM数量：</label></td>
+		                      <td style="text-align:left"><input type="text" ng-model="account.xlm2send" size="10"></td>
+		                  	  <td> </td>
+		                  </tr>
+		                  <tr style="border-top: none;">
+		                      <td style="text-align:left"><a class='btn btn-primary' role='button' ng-click="sign()">签名</a></td>
+		                      <td style="text-align:left"></td>
+		                  	  <td> </td>
+		                  </tr>
+		              </tbody>
+		          </table>
+		     </div>
+		</div>	
+	</div>
+	
+	<div class="row">
+		<div id="content" class="col-md-12">
+			<div class="panel panel-default">
+		         <div class="panel-heading">
+		             <h3 class="panel-title">签名后的交易</h3>
+		         </div>
+					<table class="table table-hover">
+		              <tbody>
+		                  <tr style="border-top: none;">
+		                      <td style="text-align:left"><span class=" ">交易XDR</span></td>
+		                      <td style="text-align:left">
+		                      	<textarea type="text" rows="8" cols="100" ng-model="account.xdr"></textarea>
+		                      </td>
+		                  </tr>
+		                  <tr style="border-top: none;">
+		                      <td style="text-align:left"><a class='btn btn-primary' role='button' ng-click="submit()" ng-disabled="working">提交</a></td>
+		                      <td style="text-align:left">联网时即可提交</td>
+		                  </tr>
+		              </tbody>
+		          </table>
+		     </div>
+		</div>	
+	</div>
+	
+</div>
+
+</body>
+<script src="js/angular-1.3.min.js"></script>
+<script src="js/stellar-tool.js"></script>
+<script src="js/sign.js"></script>
+
+</html>
